@@ -2,34 +2,38 @@ import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import heroImage from "@/assets/hero-explorer.jpg";
+// Using a gradient background instead of image for now
 import WaitlistForm from "@/components/WaitlistForm";
 
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60" />
+      {/* Background Gradient - Fruits Themed */}
+      <div className="absolute inset-0 bg-gradient-to-br from-green-600 via-emerald-500 to-teal-600">
+        <div className="absolute inset-0 bg-black/20" />
+        {/* Decorative fruit silhouettes */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-32 h-32 bg-yellow-400 rounded-full blur-3xl" />
+          <div className="absolute top-40 right-20 w-40 h-40 bg-orange-400 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 left-1/4 w-36 h-36 bg-red-400 rounded-full blur-3xl" />
+          <div className="absolute bottom-40 right-1/3 w-28 h-28 bg-purple-400 rounded-full blur-3xl" />
+        </div>
       </div>
       
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 text-center text-white">
         <div className="max-w-4xl mx-auto">
           <h1 className="font-serif text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            rediscover.city
+            Native Fruits
           </h1>
-          
+
           <p className="text-xl md:text-2xl mb-8 font-light opacity-90">
-            Walk the streets. Hear their stories.
+            Taste the seasons. Know your region.
           </p>
-          
+
           <p className="text-lg md:text-xl mb-12 max-w-2xl mx-auto opacity-80 leading-relaxed">
-            Turn every walk into a journey through time. Our AI narrator reveals the hidden history, 
-            culture, and secrets of your city as you explore.
+            Discover the incredible variety of native fruits growing in your region right now.
+            Connect with nature's seasonal bounty and explore what's naturally fresh, local, and delicious.
           </p>
           
           <div className="flex flex-col gap-6 items-center">

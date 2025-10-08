@@ -1,25 +1,25 @@
-import { MapPin, Brain, Volume2, Building2 } from "lucide-react";
+import { MapPin, Leaf, Calendar, Globe } from "lucide-react";
 
 const features = [
   {
     icon: MapPin,
-    title: "Location-Aware AI",
-    description: "Our intelligent system knows exactly where you are and tailors stories to your precise location, from street corners to landmarks.",
+    title: "Region-Specific Fruits",
+    description: "Discover what grows naturally in your specific region, from North American forests to Pacific Island paradises, tailored to your exact location.",
   },
   {
-    icon: Brain,
-    title: "Curated Knowledge",
-    description: "Access fascinating facts about history, culture, demographics, and economy - all researched and verified by our team of city experts.",
+    icon: Calendar,
+    title: "Seasonal Harvest Guide",
+    description: "Know exactly what's in season right now. Our seasonal calendar shows peak harvest times for hundreds of native fruits worldwide.",
   },
   {
-    icon: Volume2,
-    title: "Narrator Voice",
-    description: "Premium users enjoy rich, immersive storytelling read aloud in a captivating David Attenborough-style voice using advanced AI synthesis.",
+    icon: Leaf,
+    title: "Nutritional Insights",
+    description: "Learn about the exceptional health benefits of native fruits - from Vitamin C-rich camu camu to antioxidant-packed baobab and durian.",
   },
   {
-    icon: Building2,
-    title: "Multiple Cities",
-    description: "Explore stories across dozens of major cities worldwide, with new locations and content added regularly.",
+    icon: Globe,
+    title: "Global Biodiversity",
+    description: "Explore over 3,000 native fruit species across six continents, from Amazon rainforests to African savannas and Australian bushlands.",
   },
 ];
 
@@ -29,11 +29,11 @@ const Features = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Your Personal City Historian
+            Discover Nature's Seasonal Bounty
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Discover the hidden layers of your city with AI-powered storytelling that transforms 
-            every walk into an adventure through time and culture.
+            Explore the incredible diversity of native fruits growing naturally in your region.
+            Connect with seasonal eating and discover the nutritional powerhouses that have sustained communities for millennia.
           </p>
         </div>
         

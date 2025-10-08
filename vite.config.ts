@@ -15,14 +15,14 @@ export default defineConfig(({ mode }) => ({
     mode === 'development' &&
     componentTagger(),
     sitemapPlugin({
-      hostname: 'https://rediscover.city',
+      hostname: 'https://nativfruits.com',
       dynamicRoutes: [
-        '/london-walking-tour-guide',
-        '/paris-walking-tour-guide',
-        '/new-york-walking-tour-guide',
-        '/istanbul-walking-tour-guide',
-        '/berlin-walking-tour-guide',
-        '/madrid-walking-tour-guide'
+        '/north-america-seasonal-fruits',
+        '/mediterranean-europe-fruits',
+        '/southeast-asia-tropical-fruits',
+        '/south-america-exotic-fruits',
+        '/africa-native-fruits',
+        '/australia-oceania-fruits'
       ],
     }),
   ].filter(Boolean),
@@ -30,12 +30,12 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, 'index.html'),
-        'london-walking-tour-guide': path.resolve(__dirname, 'london-walking-tour-guide.html'),
-        'paris-walking-tour-guide': path.resolve(__dirname, 'paris-walking-tour-guide.html'),
-        'new-york-walking-tour-guide': path.resolve(__dirname, 'new-york-walking-tour-guide.html'),
-        'istanbul-walking-tour-guide': path.resolve(__dirname, 'istanbul-walking-tour-guide.html'),
-        'berlin-walking-tour-guide': path.resolve(__dirname, 'berlin-walking-tour-guide.html'),
-        'madrid-walking-tour-guide': path.resolve(__dirname, 'madrid-walking-tour-guide.html'),
+        'north-america-seasonal-fruits': path.resolve(__dirname, 'north-america-seasonal-fruits.html'),
+        'mediterranean-europe-fruits': path.resolve(__dirname, 'mediterranean-europe-fruits.html'),
+        'southeast-asia-tropical-fruits': path.resolve(__dirname, 'southeast-asia-tropical-fruits.html'),
+        'south-america-exotic-fruits': path.resolve(__dirname, 'south-america-exotic-fruits.html'),
+        'africa-native-fruits': path.resolve(__dirname, 'africa-native-fruits.html'),
+        'australia-oceania-fruits': path.resolve(__dirname, 'australia-oceania-fruits.html'),
       }
     }
   },
