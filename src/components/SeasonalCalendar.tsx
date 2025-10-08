@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Calendar, MapPin, Leaf, ChevronRight } from "lucide-react";
+import { Calendar, MapPin, Leaf, ChevronRight, Heart } from "lucide-react";
+import { useFavorites } from "@/hooks/useFavorites";
 
 const seasons = {
   spring: {
@@ -57,6 +58,8 @@ const regions = ["North America", "Mediterranean", "Southeast Asia", "South Amer
 const SeasonalCalendar = () => {
   const [selectedSeason, setSelectedSeason] = useState<keyof typeof seasons>("summer");
   const [selectedRegion, setSelectedRegion] = useState<string>("North America");
+
+  const { toggleFavorite, isFavorite } = useFavorites();
 
   const currentSeason = () => {
     const month = new Date().getMonth();
@@ -137,13 +140,27 @@ const SeasonalCalendar = () => {
                 {currentFruits.map((fruit, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-3 p-4 bg-muted rounded-xl hover:bg-accent transition-colors cursor-pointer group"
+                    className="flex items-center gap-3 p-4 bg-muted rounded-xl hover:bg-accent transition-colors cursor-pointer group relative"
                   >
                     <div className="w-3 h-3 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full" />
-                    <span className="font-medium group-hover:text-primary transition-colors">
+                    <span className="font-medium group-hover:text-primary transition-colors flex-1">
                       {fruit}
                     </span>
-                    <ChevronRight className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1" />
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFavorite(fruit);
+                      }}
+                      className="p-1.5 rounded-full hover:bg-background/80 transition-colors"
+                    >
+                      <Heart
+                        className={`w-4 h-4 transition-colors ${
+                          isFavorite(fruit)
+                            ? "fill-red-500 text-red-500"
+                            : "text-muted-foreground hover:text-red-500"
+                        }`}
+                      />
+                    </button>
                   </div>
                 ))}
               </div>

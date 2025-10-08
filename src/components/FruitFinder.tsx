@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
-import { Search, Filter, Leaf, Map, Clock, Heart } from "lucide-react";
+import { Search, Filter, Leaf, Map, Clock, Heart, HeartIcon, X } from "lucide-react";
+import { useFavorites } from "@/hooks/useFavorites";
 
 interface Fruit {
   name: string;
@@ -59,7 +60,7 @@ const fruitsDatabase: Fruit[] = [
   { name: "Ber", region: "India", season: "Winter", taste: "Sweet when ripe", nutrition: "Vitamin C", uses: ["Fresh", "Dried", "Pickles"] }
 ];
 
-const regions = ["All", "North America", "Mediterranean", "Southeast Asia", "South America", "Africa", "Oceania", "India"];
+const regions = ["All", "Favorites", "North America", "Mediterranean", "Southeast Asia", "South America", "Africa", "Oceania", "India"];
 const seasons = ["All", "Spring", "Summer", "Autumn", "Winter"];
 const tastes = ["All", "Sweet", "Tart", "Tropical", "Mild", "Complex", "Earthy"];
 
@@ -70,20 +71,23 @@ const FruitFinder = () => {
   const [selectedTaste, setSelectedTaste] = useState("All");
   const [showFilters, setShowFilters] = useState(false);
 
+  const { favorites, favoriteCount, toggleFavorite, isFavorite, clearAllFavorites } = useFavorites();
+
   const filteredFruits = useMemo(() => {
     return fruitsDatabase.filter((fruit) => {
       const matchesSearch = fruit.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            fruit.uses.some(use => use.toLowerCase().includes(searchTerm.toLowerCase()));
-      const matchesRegion = selectedRegion === "All" || fruit.region === selectedRegion;
+      const matchesRegion = selectedRegion === "All" ||
+                           (selectedRegion === "Favorites" && isFavorite(fruit.name)) ||
+                           fruit.region === selectedRegion;
       const matchesSeason = selectedSeason === "All" || fruit.season === selectedSeason;
       const matchesTaste = selectedTaste === "All" || fruit.taste.toLowerCase().includes(selectedTaste.toLowerCase());
 
       return matchesSearch && matchesRegion && matchesSeason && matchesTaste;
     });
-  }, [searchTerm, selectedRegion, selectedSeason, selectedTaste]);
+  }, [searchTerm, selectedRegion, selectedSeason, selectedTaste, isFavorite]);
 
-  const favoriteFruits = ["Mango", "Durian", "Baobab", "Finger Lime", "Açaí"];
-
+  
   return (
     <section className="py-24 bg-background">
       <div className="container mx-auto px-6">
@@ -171,23 +175,39 @@ const FruitFinder = () => {
           </div>
         )}
 
-        {/* Popular Fruits */}
+        {/* Favorite Fruits */}
         <div className="mb-12">
-          <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <Heart className="w-6 h-6 text-red-500" />
-            Popular Fruits
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            {favoriteFruits.map((fruit) => (
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-2xl font-bold flex items-center gap-2">
+              <Heart className="w-6 h-6 text-red-500" />
+              Your Favorites ({favoriteCount})
+            </h3>
+            {favoriteCount > 0 && (
               <button
-                key={fruit}
-                onClick={() => setSearchTerm(fruit)}
-                className="px-4 py-2 rounded-full bg-secondary hover:bg-secondary/80 transition-colors text-sm font-medium"
+                onClick={clearAllFavorites}
+                className="text-sm text-muted-foreground hover:text-destructive transition-colors flex items-center gap-1"
               >
-                {fruit}
+                <X className="w-4 h-4" />
+                Clear all
               </button>
-            ))}
+            )}
           </div>
+          {favoriteCount > 0 ? (
+            <div className="flex flex-wrap gap-3">
+              {favorites.map((fruit) => (
+                <button
+                  key={fruit}
+                  onClick={() => setSearchTerm(fruit)}
+                  className="px-4 py-2 rounded-full bg-secondary hover:bg-secondary/80 transition-colors text-sm font-medium flex items-center gap-2 group"
+                >
+                  <Heart className="w-3 h-3 fill-red-500 text-red-500" />
+                  {fruit}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <p className="text-muted-foreground italic">No favorite fruits yet. Click the heart icon on any fruit to add it to your favorites.</p>
+          )}
         </div>
 
         {/* Results */}
@@ -216,9 +236,24 @@ const FruitFinder = () => {
               {filteredFruits.map((fruit, index) => (
                 <div
                   key={index}
-                  className="p-6 bg-card rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group"
+                  className="p-6 bg-card rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group relative"
                 >
-                  <div className="flex items-start justify-between mb-4">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavorite(fruit.name);
+                    }}
+                    className="absolute top-4 right-4 p-2 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-colors z-10"
+                  >
+                    <Heart
+                      className={`w-5 h-5 transition-colors ${
+                        isFavorite(fruit.name)
+                          ? "fill-red-500 text-red-500"
+                          : "text-muted-foreground hover:text-red-500"
+                      }`}
+                    />
+                  </button>
+                  <div className="flex items-start justify-between mb-4 pr-12">
                     <h3 className="text-xl font-bold text-foreground">{fruit.name}</h3>
                     <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">
                       {fruit.region}
